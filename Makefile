@@ -5,10 +5,11 @@ FIGS := $(patsubst %.svg,%.pdf,$(wildcard fig/*.svg))
 PLOT := $(patsubst %.gp,%.tex,$(wildcard data/*.gp))
 DEPS := rev.tex code/fmt.tex abstract.txt $(CODE) $(FIGS) $(PLOT)
 BTEX := --bibtex-args="-min-crossrefs=99"
+LTEX := --latex-args="-interaction=nonstopmode -synctex=4"
 SHELL:= $(shell echo $$SHELL)
 
 all: $(DEPS) ## generate a pdf
-	@TEXINPUTS="sty:" bin/latexrun $(BTEX) $(MAIN)
+	@TEXINPUTS="sty:" bin/latexrun $(BTEX) $(LTEX) $(MAIN)
 
 submit: $(DEPS) ## proposal function
 	@for f in $(wildcard submit-*.tex); do \
