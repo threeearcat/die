@@ -2,8 +2,9 @@ MAIN ?= p
 DIFF ?= HEAD^
 CODE := $(addsuffix .tex,$(filter-out %.tex,$(wildcard code/*)))
 FIGS := $(patsubst %.svg,%.pdf,$(wildcard fig/*.svg))
+PPTX := $(patsubst pptx/%.pdf,fig/%-crop.pdf,$(wildcard pptx/*.pdf))
 PLOT := $(patsubst %.gp,%.tex,$(wildcard data/*.gp))
-DEPS := rev.tex code/fmt.tex abstract.txt $(CODE) $(FIGS) $(PLOT)
+DEPS := rev.tex code/fmt.tex abstract.txt $(CODE) $(FIGS) $(PPTX) $(PLOT)
 BTEX := --bibtex-args="-min-crossrefs=99"
 LTEX := --latex-args="-interaction=nonstopmode -synctex=4"
 SHELL:= $(shell echo $$SHELL)
@@ -36,6 +37,9 @@ code/fmt.tex: ## generate color table
 
 fig/%.pdf: fig/%.svg ## generate pdf from svg
 	inkscape --without-gui -f $^ -D -A $@
+
+fig/%-crop.pdf: pptx/%.pdf
+	pdfcrop --margin=1 $^ $@
 
 data/%.tex: data/%.gp ## generate plot
 	gnuplot $^
