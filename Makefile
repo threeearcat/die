@@ -11,7 +11,7 @@ SHELL:= $(shell echo $$SHELL)
 
 all: $(DEPS) ## generate a pdf
 	@TEXINPUTS="sty:" bin/latexrun $(BTEX) $(LTEX) $(MAIN)
-	@ln -s latex.out/p.synctex.gz p.synctex.gz
+	@ln -sf latex.out/p.synctex.gz p.synctex.gz
 
 submit: $(DEPS) ## proposal function
 	@for f in $(wildcard submit-*.tex); do \
@@ -63,6 +63,7 @@ spell: ## run a spell check
 clean: ## clean up
 	@bin/latexrun --clean
 	rm -f abstract.txt
+	rm -f p.synctex.gz
 
 distclean: clean ## clean up completely
 	rm -f code/*.tex
