@@ -11,6 +11,7 @@ SHELL:= $(shell echo $$SHELL)
 
 all: $(DEPS) ## generate a pdf
 	@TEXINPUTS="sty:" bin/latexrun $(BTEX) $(LTEX) $(MAIN)
+	@ln -s latex.out/p.synctex.gz p.synctex.gz
 
 submit: $(DEPS) ## proposal function
 	@for f in $(wildcard submit-*.tex); do \
