@@ -20,3 +20,5 @@
 !/data/*.eps
 .latexrun.db
 /p.synctex.gz
+
+/nsf-submit

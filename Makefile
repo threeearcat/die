@@ -14,9 +14,7 @@ all: $(DEPS) ## generate a pdf
 	@ln -sf latex.out/p.synctex.gz p.synctex.gz
 
 submit: $(DEPS) ## proposal function
-	@for f in $(wildcard submit-*.tex); do \
-		TEXINPUTS="sty:" bin/latexrun $$f; \
-	done
+	@bin/nsf-submit.py $(MAIN).pdf $(CURDIR)/nsf-submit
 
 diff: $(DEPS) ## generate diff-highlighed pdf
 	@bin/diff.sh $(DIFF)
