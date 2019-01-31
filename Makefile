@@ -10,7 +10,7 @@ LTEX := --latex-args="-interaction=nonstopmode -synctex=4"
 SHELL:= $(shell echo $$SHELL)
 
 all: $(DEPS) ## generate a pdf
-	@TEXINPUTS="sty:" bin/latexrun $(BTEX) $(LTEX) $(MAIN)
+	@TEXINPUTS="sty:" python3 bin/latexrun.py $(BTEX) $(LTEX) $(MAIN)
 	@ln -sf latex.out/p.synctex.gz p.synctex.gz
 
 submit: $(DEPS) ## proposal function
@@ -45,11 +45,11 @@ data/%.tex: data/%.gp ## generate plot
 
 draft: $(DEPS) ## generate pdf with a draft info
 	echo -e '\\newcommand*{\\DRAFT}{}' >> rev.tex
-	@TEXINPUTS="sty:" bin/latexrun $(BTEX) $(MAIN)
+	@TEXINPUTS="sty:" python3 bin/latexrun.py $(BTEX) $(MAIN)
 
 watermark: $(DEPS) ## generate pdf with a watermark
 	echo -e '\\usepackage[firstpage]{draftwatermark}' >> rev.tex
-	@TEXINPUTS="sty:" bin/latexrun $(BTEX) $(MAIN)
+	@TEXINPUTS="sty:" python3 bin/latexrun.py $(BTEX) $(MAIN)
 
 spell: ## run a spell check
 	@for i in *.tex fig/*.tex; do bin/aspell.sh $$i; done
@@ -59,7 +59,7 @@ spell: ## run a spell check
 	@pdftotext $(MAIN).pdf /dev/stdout | grep '??'
 
 clean: ## clean up
-	@bin/latexrun --clean
+	@python3 bin/latexrun.py --clean
 	rm -f abstract.txt
 	rm -f p.synctex.gz
 
@@ -71,6 +71,6 @@ init: ## init writing (discarding example)
 	perl -pi -e 's/^\\input{ex}/% \\input{ex}/g' $(MAIN).tex
 
 abstract.txt: abstract.tex $(MAIN).tex ## generate abstract.txt
-	@bin/mkabstract $(MAIN).tex $< | fmt -w72 > $@
+	@python3 bin/mkabstract.py $(MAIN).tex $< | fmt -w72 > $@
 
 .PHONY: all help FORCE draft clean spell distclean init
