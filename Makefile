@@ -14,10 +14,10 @@ all: $(DEPS) ## generate a pdf
 	@ln -sf latex.out/p.synctex.gz p.synctex.gz
 
 submit: $(DEPS) ## proposal function
-	@bin/nsf-submit.py $(MAIN).pdf $(CURDIR)/nsf-submit
+	@python bin/nsf-submit.py $(MAIN).pdf $(CURDIR)/nsf-submit
 
 diff: $(DEPS) ## generate diff-highlighed pdf
-	@bin/diff.sh $(DIFF)
+	@sh bin/diff.sh $(DIFF)
 
 help: ## print help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
@@ -52,10 +52,10 @@ watermark: $(DEPS) ## generate pdf with a watermark
 	@TEXINPUTS="sty:" python3 bin/latexrun.py $(BTEX) $(MAIN)
 
 spell: ## run a spell check
-	@for i in *.tex fig/*.tex; do bin/aspell.sh $$i; done
+	@for i in *.tex fig/*.tex; do sh bin/aspell.sh $$i; done
 	@for i in *.tex; do bin/double.pl $$i; done
 	@for i in *.tex; do bin/abbrv.pl  $$i; done
-	@bin/hyphens.sh *.tex
+	@sh bin/hyphens.sh *.tex
 	@pdftotext $(MAIN).pdf /dev/stdout | grep '??'
 
 clean: ## clean up
