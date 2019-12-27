@@ -11,7 +11,7 @@ SHELL:= $(shell echo $$SHELL)
 
 all: $(DEPS) ## generate a pdf
 	@TEXINPUTS="sty:" python3 bin/latexrun.py $(BTEX) $(LTEX) $(MAIN)
-	@ln -sf latex.out/p.synctex.gz p.synctex.gz
+	@cp latex.out/p.synctex.gz p.synctex.gz
 
 submit: $(DEPS) ## proposal function
 	@python bin/nsf-submit.py $(MAIN).pdf $(CURDIR)/nsf-submit
