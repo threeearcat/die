@@ -1,8 +1,4 @@
-\documentclass[11pt,letterpaper,twocolumn]{article}
-
-% conference specific style
-\usepackage[11pt,nocopyright]{sigmin}
-\usepackage[square,comma,numbers,sort&compress]{natbib}
+\documentclass[10pt,sigconf]{acmart}
 
 % common packages
 \include{pkgs}
@@ -22,10 +18,13 @@
 \begin{document}
 
 \input{hdr}
+
 \date{}
-\maketitle
 
 \input{abstract}
+
+\maketitle
+
 \input{intro}
 \input{overview}
 \input{design}
@@ -40,6 +39,7 @@
 \footnotesize
 \setlength{\bibsep}{3pt}
 \bibliography{p,sslab,conf}
+
 \end{document}
 
 %%% Local Variables:
